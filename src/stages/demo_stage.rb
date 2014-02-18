@@ -2,6 +2,8 @@ define_stage :demo do
   requires :pipe_layer
 
   curtain_up do
+    sound_manager.play_music :background, repeat:true
+
     @score_keeper = create_actor :score, x: viewport.width/2, y: 40, font_size: 50
     @bird = create_actor :bird, x: 10, y:viewport.height/2
     @bird.controller.map_controls '+space' => :flap
