@@ -28,8 +28,8 @@ define_stage :demo do
     end
 
     viewport.stay_centered_on @bird, 
-      offset_x: 300, 
-      offset_y: 0, 
+      x_offset: 300, 
+      y_offset: 0, 
       x_chain_length: 0, 
       y_chain_length: viewport.height
 
