@@ -25,7 +25,7 @@ define_behavior :flappy do
       end
     end
 
-    actor.input.when(:flap){ flap }
+    actor.controller.when(:flap){ flap }
   end
 
   helpers do

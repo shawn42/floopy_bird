@@ -1,11 +1,10 @@
 define_stage :demo do
-  # render_with :my_renderer
   requires :pipe_layer
 
   curtain_up do
     @score_keeper = create_actor :score, x: viewport.width/2, y: 40, font_size: 50
     @bird = create_actor :bird, x: 10, y:viewport.height/2
-    @bird.input.map_input '+space' => :flap
+    @bird.controller.map_controls '+space' => :flap
     @bird.when(:hit_ground) { bird_death }
 
     create_actor :background
