@@ -1,5 +1,5 @@
 define_stage :demo do
-  requires :pipe_layer
+  requires :pipe_generator
 
   curtain_up do
     sound_manager.play_music :background, repeat:true
@@ -11,9 +11,9 @@ define_stage :demo do
 
     create_actor :background
 
-    pipe_layer.when(:lay_top_pipe) { |args| create_actor :top_pipe, args } 
-    pipe_layer.when(:lay_bottom_pipe) { |args| create_actor :bottom_pipe, args }
-    pipe_layer.when(:score_zone) { |args| create_actor :score_zone, args }
+    pipe_generator.when(:create_top_pipe) { |args| create_actor :top_pipe, args } 
+    pipe_generator.when(:create_bottom_pipe) { |args| create_actor :bottom_pipe, args }
+    pipe_generator.when(:create_score_zone) { |args| create_actor :score_zone, args }
 
     input_manager.reg :down, KbSpace do
       @bird.waiting = false

@@ -6,3 +6,4 @@ gem "gamebox", '~> 0.5.0'
 gem "conject"
 gem "rspec"
 gem "pry"
+gem "releasy"
