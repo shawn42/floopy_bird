@@ -1,0 +1,7 @@
+--- 
+:sound: false
+:auto_quit: KbEscape
+:fullscreen: false
+:screen_resolution: 
+- 800
+- 600
