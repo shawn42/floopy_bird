@@ -2,6 +2,8 @@ define_stage :demo do
   requires :pipe_generator
 
   curtain_up do
+    create_actor :background
+
     sound_manager.play_music :background, repeat:true
 
     @score_keeper = create_actor :score, x: viewport.width/2, y: 40, font_size: 50
@@ -9,22 +11,17 @@ define_stage :demo do
     @bird.controller.map_controls '+space' => :flap
     @bird.when(:hit_ground) { bird_death }
 
-    create_actor :background
 
-    pipe_generator.when(:create_top_pipe) { |args| create_actor :top_pipe, args } 
-    pipe_generator.when(:create_bottom_pipe) { |args| create_actor :bottom_pipe, args }
+    pipe_generator.when(:create_pipe) { |args| create_actor :pipe, args } 
     pipe_generator.when(:create_score_zone) { |args| create_actor :score_zone, args }
 
-    input_manager.reg :down, KbSpace do
-      @bird.waiting = false
-    end
-
-    on_collision_of :bird, [:top_pipe, :bottom_pipe] do |bird, pipe|
+    on_collision_of :bird, :pipe do |bird, pipe|
       bird_death
     end
 
     on_collision_of :bird, :score_zone do |bird, score_zone|
-      @score_keeper.score = score_zone.score
+      @score_keeper.score += 1
+      score_zone.remove
     end
 
     viewport.stay_centered_on @bird, 
@@ -35,10 +32,13 @@ define_stage :demo do
 
   end
 
+  curtain_down do
+    input_manager.clear_hooks
+  end
+
   helpers do
     def bird_death
       fire :restart_stage
     end
   end
 end
-

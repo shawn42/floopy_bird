@@ -1,29 +1,28 @@
 define_actor :bird do
   has_behaviors do
+    layered ZOrder::Bird
     collidable shape: :circle, radius: 11
     animated_with_spritemap interval: 120, file: 'bird.png', rows: 1, cols: 4, actions: {
       idle: 0..3,
       glide: 1,
       flying: 0..3
     }
-    flappy
+    graphical
+    hits_ground
+    waits_to_fly
+    rotates_based_on_velocity
   end
+end
 
-  view do
-    draw do |target, x_off, y_off, z|
-      img = actor.image
-      return if img.nil?
-      x = actor.x
-      y = actor.y
-      w = actor.width
-      h = actor.height
-
-      offset_x = x+x_off
-      offset_y = y+y_off
-
-      target.draw_rotated_image img, offset_x, offset_y, ZOrder::Player, actor.rotation
-      # target.draw_box offset_x, offset_y, offset_x+w, offset_y+h, Color::GREEN, ZOrder::Debug
+define_behavior :waits_to_fly do
+  setup do
+    actor.controller.when(:flap) do
+      remove_behavior :waits_to_fly
+      add_behavior :flappy
     end
   end
 
+  remove do
+    actor.controller.unsubscribe_all self
+  end
 end

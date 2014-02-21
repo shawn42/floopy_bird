@@ -1,6 +1,7 @@
 module ZOrder
   Background,
-  Player,
+  Pipe,
+  Bird,
   Debug,
   Console = *(0..100)
 end
