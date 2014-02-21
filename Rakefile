@@ -21,6 +21,7 @@ Releasy::Builders::OsxApp::SOURCE_GEMS_TO_REMOVE.concat %w(chingu chingu.rb chip
 Releasy::Project.new do
   name Gamebox.configuration.game_name.gsub(' ','')
   version "0.0.1"
+  verbose
 
   executable "src/app.rb"
   files ["config/**/*.*", "src/**/*.rb", "data/**/*.*"]
@@ -29,7 +30,8 @@ Releasy::Project.new do
   # Create a variety of releases, for all platforms.
   add_build :osx_app do
     url "io.gamebox.my_game"
-    wrapper "#{ENV['GOSU_DOWNLOADS']}/gosu-mac-wrapper-0.7.47.tar.gz" 
+    gosu_downloads = ENV['GOSU_DOWNLOADS'] || "#{ENV['HOME']}/tmp"
+    wrapper "#{gosu_downloads}/gosu-mac-wrapper-0.7.47.tar.gz" 
     add_package :tar_gz
   end
 
